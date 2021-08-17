@@ -24,10 +24,20 @@ var argv = yargs
       default: 'CN',
       describe: 'Subnets that should be routed to ISP gateway'
     })
+    .options('route.force_net', {
+      string: true,
+      default: '',
+      describe: 'Subnets that must be routed to ISP gateway, never minified'
+    })
     .options('route.vpn', {
       string: true,
       default: 'US,GB,JP,HK',
       describe: 'Subnets that should be routed to VPN gateway'
+    })
+    .options('route.force_vpn', {
+      string: true,
+      default: '',
+      describe: 'Subnets that must be routed to VPN gateway, never minified'
     })
     .options('p', {
       alias: 'profile',
