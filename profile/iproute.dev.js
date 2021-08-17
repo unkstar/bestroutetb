@@ -2,17 +2,21 @@ module.exports = function(Formatter) {
 
 function IpRouteDevUpFormatter() {
   Formatter.apply(this, arguments);
+  this.header='#!/bin/sh\nip ro d default\nip -b - <<FILE\n';
 }
+
 $inherit(IpRouteDevUpFormatter, Formatter, {
-  header: '#!/bin/sh\nip -b - <<FILE\n',
   footer: 'FILE\n',
   ruleFormat: 'r a %prefix/%length dev %gw\n'
 });
 
 function IpRouteDevDownFormatter() {
   Formatter.apply(this, arguments);
+  this.footer='FILE\nip ro a default dev '+ this.gateway.net;
 }
-$inherit(IpRouteDevDownFormatter, IpRouteDevUpFormatter, {
+
+$inherit(IpRouteDevDownFormatter, Formatter, {
+  header: '#!/bin/sh\nip -b - <<FILE\n',
   ruleFormat: 'r d %prefix/%length dev %gw\n'
 });
 
