@@ -2,11 +2,11 @@ module.exports = function(Formatter) {
 
 function IpRouteUpFormatter() {
   Formatter.apply(this, arguments);
-  this.header='#!/bin/sh\nip ro d default\nip -b - <<FILE\n';
+  this.footer='FILE\nip ro r default via '+ this.gateway.vpn;
 }
 
 $inherit(IpRouteUpFormatter, Formatter, {
-  footer: 'FILE\n',
+  header: '#!/bin/sh\nip -b - <<FILE\n',
   ruleFormat: 'r a %prefix/%length via %gw\n'
 });
 
